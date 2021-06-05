@@ -13,10 +13,60 @@ const scene = new THREE.Scene()
 const geometry = new THREE.BoxGeometry(1, 1, 1)
 const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
 const mesh = new THREE.Mesh(geometry, material)
-mesh.position.x = 0.7
-mesh.position.y = -0.6
-mesh.position.z = 0.6
-scene.add(mesh)
+
+//ObjectGroup
+
+const group = new THREE.Group()
+scene.add(group);
+
+const cubeOne = new THREE.Mesh(
+    new THREE.BoxGeometry(1,1,1),
+    new THREE.MeshBasicMaterial({color: 0xff0000})
+);
+const cubeTwo = new THREE.Mesh(
+    new THREE.BoxGeometry(1,1,1),
+    new THREE.MeshBasicMaterial({color: 0x00ff00})
+);
+const cubeThree = new THREE.Mesh(
+    new THREE.BoxGeometry(1,1,1),
+    new THREE.MeshBasicMaterial({color: 0x0000ff})
+);
+
+group.add(cubeOne);
+group.add(cubeTwo);
+group.add(cubeThree);
+
+cubeTwo.position.y = 1;
+cubeThree.position.x = 1;
+
+group.scale.y = 2;
+group.rotation.z = Math.PI /2;
+
+// Object Positioning
+// mesh.position.x = 0.7
+// mesh.position.y = - 0.6
+// mesh.position.z = 1
+// mesh.position.set(0.7, -0.6, 0.4);
+// scene.add(mesh)
+
+// Scale
+// mesh.scale.x = 2;
+// mesh.scale.y = 1;
+// mesh.scale.z = 1;
+
+mesh.scale.set(2, 1, 1);
+
+//Rotation 
+// Order in which the object rotates around the axis
+mesh.rotation.reorder('YXZ');
+mesh.rotation.y = Math.PI / 2;
+mesh.rotation.x = Math.PI * 0.25;
+
+// AxesHelper
+const axesHelper = new THREE.AxesHelper(5);
+
+scene.add(axesHelper);
+
 
 /**
  * Sizes
@@ -30,8 +80,12 @@ const sizes = {
  * Camera
  */
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
-camera.position.z = 3
+camera.position.z = 5
+camera.position.y = 1
+camera.position.x = 1
 scene.add(camera)
+
+camera.lookAt(group.position);
 
 /**
  * Renderer

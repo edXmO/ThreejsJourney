@@ -1,5 +1,6 @@
 import './style.css'
-import * as THREE from 'three'
+import * as THREE from 'three';
+import gsap from 'gsap';
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -39,8 +40,8 @@ group.add(cubeThree);
 cubeTwo.position.y = 1;
 cubeThree.position.x = 1;
 
-group.scale.y = 2;
-group.rotation.z = Math.PI /2;
+// group.scale.y = 2;
+// group.rotation.z = Math.PI * 2;
 
 // Object Positioning
 // mesh.position.x = 0.7
@@ -94,4 +95,50 @@ const renderer = new THREE.WebGLRenderer({
     canvas: canvas
 })
 renderer.setSize(sizes.width, sizes.height)
-renderer.render(scene, camera)
+
+// Time && Clock, two ways of synchronize the animation with
+// the framerate so to be sure the animation always goes to the same speed
+
+// Time
+// let time = Date.now();
+
+// Clock
+
+let clock = new THREE.Clock();
+
+//Animations
+
+// gsap.to(group.position, {x : 2, duration: 1, delay: 2});
+
+const tick = () => 
+{
+
+    //Clock 
+    // const elapsedTime = clock.getElapsedTime();
+    // console.log(elapsedTime)
+
+    // Time
+    // const currentTime = Date.now();
+    // const deltaTime = currentTime - time;
+    // time = currentTime;
+
+    // Update object
+    // group.rotation.y += 0.01 * deltaTime;
+    // Elevator Mode 
+    // group.position.y = Math.tan(elapsedTime)
+    // Circles
+    // group.position.x = Math.sin(elapsedTime);
+    // group.position.y = Math.cos(elapsedTime);
+
+    // camera.position.y = Math.sin(elapsedTime);
+    // camera.position.x = Math.cos(elapsedTime);
+
+    // console.log('tick')
+    // Render
+    renderer.render(scene, camera)
+
+    // Not calling the functions, passing the function as a parameter
+    window.requestAnimationFrame(tick);
+}
+
+tick();
